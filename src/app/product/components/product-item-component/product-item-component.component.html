@@ -1,0 +1,6 @@
+<p>
+  <span>{{ product.name }} - ${{ product.price }}</span> <br>
+  <span>{{ product.description }}</span> <br>
+</p>
+
+<button (click)="onBuy(product)" [disabled]="!product.isAvailable">Buy</button>

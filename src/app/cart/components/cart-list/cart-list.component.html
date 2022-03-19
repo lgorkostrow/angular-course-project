@@ -1,0 +1,9 @@
+<div *ngIf="items.length > 0; else emptyCart">
+  <p>Total: ${{ total }}</p>
+  <ul>
+    <li *ngFor="let item of items">x{{ item.quantity }} {{ item.name }} - ${{ item.price }}</li>
+  </ul>
+</div>
+<ng-template #emptyCart>
+  Cart is empty
+</ng-template>

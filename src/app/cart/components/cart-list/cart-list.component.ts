@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CartItemModel} from "../models/cart-item-model";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CartItemModel} from "../../models/cart-item-model";
 
 @Component({
   selector: 'app-cart-list',
@@ -8,11 +8,27 @@ import {CartItemModel} from "../models/cart-item-model";
 })
 export class CartListComponent implements OnInit {
   @Input() public items: CartItemModel[] = [];
-  @Input() public total: number = 0;
+  @Input() public totalSum: number = 0;
+  @Input() public totalQuantity: number = 0;
+
+  @Output() public increaseCartItem = new EventEmitter<number>();
+  @Output() public decreaseCartItem = new EventEmitter<number>();
+  @Output() public deleteCartItem = new EventEmitter<number>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  public onIncrease(cartItemId: number): void {
+    this.increaseCartItem.emit(cartItemId);
+  }
+
+  public onDecrease(cartItemId: number): void {
+    this.decreaseCartItem.emit(cartItemId);
+  }
+
+  public onDelete(cartItemId: number): void {
+    this.deleteCartItem.emit(cartItemId);
+  }
 }

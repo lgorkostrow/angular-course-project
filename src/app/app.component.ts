@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductRepository} from "./product/services/product-repository";
-import {CartService} from "./cart/components/services/cart-service";
+import {CartService} from "./cart/services/cart-service";
 import {ProductModel} from "./product/models/product-model";
-import {CartItemModel} from "./cart/components/models/cart-item-model";
+import {CartItemModel} from "./cart/models/cart-item-model";
 
 @Component({
   selector: 'app-root',
@@ -20,8 +20,12 @@ export class AppComponent implements OnInit {
     return this.cartService.items;
   }
 
-  get cartTotal(): number {
-    return this.cartService.total;
+  get cartTotalSum(): number {
+    return this.cartService.totalSum;
+  }
+
+  get cartTotalQuantity(): number {
+    return this.cartService.totalQuantity;
   }
 
   constructor(
@@ -36,5 +40,17 @@ export class AppComponent implements OnInit {
 
   public onAddItemToCart(item: ProductModel): void {
     this.cartService.addItemToCart(item);
+  }
+
+  public onIncreaseCartItem(productId: number): void {
+    this.cartService.increaseQuantity(productId);
+  }
+
+  public onDecreaseCartItem(productId: number): void {
+    this.cartService.decreaseQuantity(productId);
+  }
+
+  public onDeleteCartItem(productId: number): void {
+    this.cartService.deleteItem(productId);
   }
 }

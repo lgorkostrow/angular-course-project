@@ -1,6 +1,15 @@
 # Changelog
 
-## Introduction
+## Task 2. Components
+### Added
+* Added Highlight directive
+* Added project title
+
+### Changed
+* Reworked project structure, added smart components
+* Divided the project into modules
+
+## Task 1. Introduction
 ### Added
 * Added components: ProductList, ProductItem, CartList
 * Added services: ProductRepository, CartService

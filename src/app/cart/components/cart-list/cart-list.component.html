@@ -1,8 +1,10 @@
 <div *ngIf="items.length > 0; else emptyCart">
-  <p>Total: ${{ total }}</p>
-  <ul>
-    <li *ngFor="let item of items">x{{ item.quantity }} {{ item.name }} - ${{ item.price }}</li>
-  </ul>
+  <p>Total sum: ${{ totalSum }}, Total qunatity: {{ totalQuantity }}</p>
+  <app-cart-item
+    *ngFor="let item of items" [item]="item"
+    (increaseCartItem)="onIncrease($event)"
+    (decreaseCartItem)="onDecrease($event)"
+    (deleteCartItem)="onDelete($event)"></app-cart-item>
 </div>
 <ng-template #emptyCart>
   Cart is empty

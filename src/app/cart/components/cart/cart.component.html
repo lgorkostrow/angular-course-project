@@ -1,0 +1,8 @@
+<app-cart-list
+  [items]="cartItems"
+  [totalSum]="cartTotalSum"
+  [totalQuantity]="cartTotalQuantity"
+  (increaseCartItem)="onIncreaseCartItem($event)"
+  (decreaseCartItem)="onDecreaseCartItem($event)"
+  (deleteCartItem)="onDeleteCartItem($event)">
+</app-cart-list>

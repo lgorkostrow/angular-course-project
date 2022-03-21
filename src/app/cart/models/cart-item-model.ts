@@ -1,4 +1,4 @@
-import {ProductModel} from "../../../product/models/product-model";
+import {ProductModel} from "../../product/models/product-model";
 
 export class CartItemModel {
   constructor(
@@ -6,6 +6,7 @@ export class CartItemModel {
     private _name: string,
     private _quantity: number,
     private _price: number,
+    private _totalPrice: number,
   ) {
   }
 
@@ -25,11 +26,16 @@ export class CartItemModel {
     return this._price;
   }
 
+  get totalPrice(): number {
+    return this._totalPrice;
+  }
+
   public static createFromProduct(product: ProductModel): CartItemModel {
     return new CartItemModel(
       product.id,
       product.name,
       1,
+      product.price,
       product.price,
     );
   }
@@ -39,7 +45,21 @@ export class CartItemModel {
       throw new Error('Invalid product');
     }
 
-    this._price += product.price;
+    this._totalPrice += product.price;
     this._quantity++;
+  }
+
+  public increaseQuantity(): void {
+    this._totalPrice += this._price;
+    this._quantity++;
+  }
+
+  public decreaseQuantity(): void {
+    if (this._quantity === 1) {
+      throw new Error('Can not decrease quantity to 0');
+    }
+
+    this._totalPrice -= this._price;
+    this._quantity--;
   }
 }

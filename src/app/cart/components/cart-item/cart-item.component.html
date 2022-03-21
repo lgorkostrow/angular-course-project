@@ -1,4 +1,4 @@
-<div>
+<div appHighlightDirective defaultColor="#FFFFFF" highlightColor="#7DBBD4">
   x{{ item.quantity }} {{ item.name }} - ${{ item.totalPrice }}
   <button (click)="onIncrease(item.id)">+</button>
   <button (click)="onDecrease(item.id)">-</button>

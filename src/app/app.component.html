@@ -1,13 +1,5 @@
-<app-product-list-component
-  [products]="products"
-  (addItemToCart)="onAddItemToCart($event)">
-</app-product-list-component>
+<h1 #appTitle></h1>
+
+<app-product></app-product>
 <hr>
-<app-cart-list
-  [items]="cartItems"
-  [totalSum]="cartTotalSum"
-  [totalQuantity]="cartTotalQuantity"
-  (increaseCartItem)="onIncreaseCartItem($event)"
-  (decreaseCartItem)="onDecreaseCartItem($event)"
-  (deleteCartItem)="onDeleteCartItem($event)">
-</app-cart-list>
+<app-cart></app-cart>

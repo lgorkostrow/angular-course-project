@@ -7,7 +7,7 @@ export class HighlightDirective {
   @Input() public defaultColor: string = '#FFFFFF';
   @Input() public highlightColor: string = '#CCCCCC';
 
-  private currentColor: string = '#FFFFFF';
+  private currentColor: string = this.defaultColor; // '#FFFFFF';
 
   @HostBinding('style.background-color') get getBackgroundColor() {
     return this.currentColor;

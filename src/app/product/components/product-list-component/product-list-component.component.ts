@@ -7,8 +7,8 @@ import {ProductModel} from "../../models/product-model";
   styleUrls: ['./product-list-component.component.scss'],
 })
 export class ProductListComponentComponent implements OnInit {
-  @Input() public products: ProductModel[] = [];
-  @Output() public addItemToCart = new EventEmitter<ProductModel>();
+  @Input() products: ProductModel[] = [];
+  @Output() addItemToCart = new EventEmitter<ProductModel>();
 
   constructor() { }
 
@@ -16,7 +16,7 @@ export class ProductListComponentComponent implements OnInit {
 
   }
 
-  public onAddItemToCart(item: ProductModel): void {
+  onAddItemToCart(item: ProductModel): void {
     this.addItemToCart.emit(item);
   }
 }

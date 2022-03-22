@@ -7,15 +7,15 @@ import {ProductModel} from "../../models/product-model";
   styleUrls: ['./product-item-component.component.scss']
 })
 export class ProductItemComponentComponent implements OnInit {
-  @Input() public product!: ProductModel;
-  @Output() public addItemToCart = new EventEmitter<ProductModel>();
+  @Input() product!: ProductModel;
+  @Output() addItemToCart = new EventEmitter<ProductModel>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  public onBuy(product: ProductModel): void {
+  onBuy(product: ProductModel): void {
     this.addItemToCart.emit(product);
   }
 }

@@ -7,26 +7,26 @@ import {CartItemModel} from "../../models/cart-item-model";
   styleUrls: ['./cart-item.component.scss']
 })
 export class CartItemComponent implements OnInit {
-  @Input() public item!: CartItemModel;
+  @Input() item!: CartItemModel;
 
-  @Output() public increaseCartItem = new EventEmitter<number>();
-  @Output() public decreaseCartItem = new EventEmitter<number>();
-  @Output() public deleteCartItem = new EventEmitter<number>();
+  @Output() increaseCartItem = new EventEmitter<CartItemModel['id']>(); // можно и так
+  @Output() decreaseCartItem = new EventEmitter<number>();
+  @Output() deleteCartItem = new EventEmitter<number>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  public onIncrease(productId: number): void {
+  onIncrease(productId: number): void {
     this.increaseCartItem.emit(productId);
   }
 
-  public onDecrease(productId: number): void {
+  onDecrease(productId: number): void {
     this.decreaseCartItem.emit(productId);
   }
 
-  public onDelete(productId: number): void {
+  onDelete(productId: number): void {
     this.deleteCartItem.emit(productId);
   }
 }

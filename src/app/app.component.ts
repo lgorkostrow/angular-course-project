@@ -6,6 +6,7 @@ import {CartService} from "./cart/services/cart-service";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  // не самое лучшее место для регистрации сервисов, разберем на следующей теме
   providers: [
     ProductRepository,
     CartService,

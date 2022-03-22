@@ -6,6 +6,7 @@ import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
   declarations: [
+    // поправьте на следующей итерации названия этих компонентов, уберите лишний суффикс Component
     ProductListComponentComponent,
     ProductItemComponentComponent,
     ProductComponent,

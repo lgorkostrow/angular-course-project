@@ -9,18 +9,18 @@ import {CartService} from "../../../cart/services/cart-service";
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
-  public products: ProductModel[] = [];
+  products: ProductModel[] = [];
 
   constructor(
     private productRepository: ProductRepository,
     private cartService: CartService,
   ) { }
 
-  public async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<void> {
     this.products = await this.productRepository.getProducts();
   }
 
-  public onAddItemToCart(item: ProductModel): void {
+  onAddItemToCart(item: ProductModel): void {
     this.cartService.addItemToCart(item);
   }
 }

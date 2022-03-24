@@ -28,15 +28,15 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onIncreaseCartItem(productId: number): void {
+  onIncreaseCartItem(productId: number): void {
     this.cartService.increaseQuantity(productId);
   }
 
-  public onDecreaseCartItem(productId: number): void {
+  onDecreaseCartItem(productId: number): void {
     this.cartService.decreaseQuantity(productId);
   }
 
-  public onDeleteCartItem(productId: number): void {
+  onDeleteCartItem(productId: number): void {
     this.cartService.deleteItem(productId);
   }
 }

@@ -16,7 +16,7 @@ export class CartService {
     return this._items.reduce((sum: number, current: CartItemModel) => sum + current.quantity, 0);
   }
 
-  public addItemToCart(item: ProductModel): void {
+  addItemToCart(item: ProductModel): void {
     let cartItem = this.items.find(x => x.id === item.id);
     if (cartItem) {
       cartItem.addProduct(item);
@@ -27,7 +27,7 @@ export class CartService {
     this.items.push(CartItemModel.createFromProduct(item));
   }
 
-  public increaseQuantity(productId: number): void {
+  increaseQuantity(productId: number): void {
     let item = this.items.find(x => x.id === productId);
     if (!item) {
       throw new Error('Invalid product id');
@@ -36,7 +36,7 @@ export class CartService {
     item.increaseQuantity();
   }
 
-  public decreaseQuantity(productId: number): void {
+  decreaseQuantity(productId: number): void {
     let item = this.items.find(x => x.id === productId);
     if (!item) {
       throw new Error('Invalid product id');
@@ -52,7 +52,7 @@ export class CartService {
     item.decreaseQuantity();
   }
 
-  public deleteItem(productId: number): void {
+  deleteItem(productId: number): void {
     let idx = this.items.findIndex(x => x.id === productId);
     if (idx === -1) {
       throw new Error('Invalid product id');

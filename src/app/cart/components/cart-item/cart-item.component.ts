@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CartItemModel} from "../../models/cart-item-model";
+import {CartItemModel} from "../../models/cart-item.model";
 
 @Component({
   selector: 'app-cart-item',
@@ -9,9 +9,9 @@ import {CartItemModel} from "../../models/cart-item-model";
 export class CartItemComponent implements OnInit {
   @Input() item!: CartItemModel;
 
-  @Output() increaseCartItem = new EventEmitter<CartItemModel['id']>(); // можно и так
-  @Output() decreaseCartItem = new EventEmitter<number>();
-  @Output() deleteCartItem = new EventEmitter<number>();
+  @Output() increaseCartItem = new EventEmitter<CartItemModel['id']>();
+  @Output() decreaseCartItem = new EventEmitter<CartItemModel['id']>();
+  @Output() deleteCartItem = new EventEmitter<CartItemModel['id']>();
 
   constructor() { }
 

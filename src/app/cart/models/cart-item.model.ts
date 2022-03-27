@@ -1,4 +1,12 @@
-import {ProductModel} from "../../product/models/product-model";
+import {ProductModel} from "../../product/models/product.model";
+
+export interface SerializedCartItemModel {
+  _id: number;
+  _name: string;
+  _quantity: number;
+  _price: number;
+  _totalPrice: number;
+}
 
 export class CartItemModel {
   constructor(
@@ -30,7 +38,7 @@ export class CartItemModel {
     return this._totalPrice;
   }
 
-  public static createFromProduct(product: ProductModel): CartItemModel {
+  static createFromProduct(product: ProductModel): CartItemModel {
     return new CartItemModel(
       product.id,
       product.name,
@@ -40,7 +48,17 @@ export class CartItemModel {
     );
   }
 
-  public addProduct(product: ProductModel): void {
+  static createFromSerializedModel(model: SerializedCartItemModel): CartItemModel {
+    return new CartItemModel(
+      model._id,
+      model._name,
+      model._quantity,
+      model._price,
+      model._totalPrice,
+    );
+  }
+
+  addProduct(product: ProductModel): void {
     if (product.id !== this._id) {
       throw new Error('Invalid product');
     }
@@ -49,17 +67,17 @@ export class CartItemModel {
     this._quantity++;
   }
 
-  public increaseQuantity(): void {
-    this._totalPrice += this._price;
+  increaseQuantity(): void {
+    this._totalPrice += this.price;
     this._quantity++;
   }
 
-  public decreaseQuantity(): void {
+  decreaseQuantity(): void {
     if (this._quantity === 1) {
       throw new Error('Can not decrease quantity to 0');
     }
 
-    this._totalPrice -= this._price;
+    this._totalPrice -= this.price;
     this._quantity--;
   }
 }

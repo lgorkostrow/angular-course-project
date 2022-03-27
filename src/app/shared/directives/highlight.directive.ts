@@ -1,11 +1,11 @@
-import {Directive, ElementRef, HostBinding, HostListener, Input, Renderer2} from '@angular/core';
+import {Directive, HostBinding, HostListener, Input, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[appHighlightDirective]'
 })
 export class HighlightDirective {
-  @Input() public defaultColor: string = '#FFFFFF';
-  @Input() public highlightColor: string = '#CCCCCC';
+  @Input() defaultColor: string = '#FFFFFF';
+  @Input() highlightColor: string = '#CCCCCC';
 
   private currentColor: string = this.defaultColor; // '#FFFFFF';
 
@@ -14,7 +14,6 @@ export class HighlightDirective {
   }
 
   @HostListener('mouseover') onMouseOver() {
-    console.log(222)
     this.currentColor = this.highlightColor;
   }
 

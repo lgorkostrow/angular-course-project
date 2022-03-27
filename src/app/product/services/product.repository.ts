@@ -1,10 +1,10 @@
-import {BaseRepository} from "../../core/services/base-repository";
-import {CategoryEnum, ProductModel} from "../models/product-model";
+import {BaseRepository} from "../../core/services/base.repository";
+import {CategoryEnum, ProductModel} from "../models/product.model";
 import {Injectable} from "@angular/core";
 
 @Injectable()
 export class ProductRepository extends BaseRepository {
-  public getProducts(): Promise<ProductModel[]> {
+  getProducts(): Promise<ProductModel[]> {
     const productList: ProductModel[] = [
       { id: 1, name: 'Lenovo ThinkPad x1 Carbon', description: '', category: CategoryEnum.Laptops, price: 1899, isAvailable: true, },
       { id: 2, name: 'Lenovo ThinkPad x1 Nano', description: '', category: CategoryEnum.Laptops, price: 2099, isAvailable: false, },

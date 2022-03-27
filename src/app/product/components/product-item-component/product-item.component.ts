@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ProductModel} from "../../models/product-model";
+import {ProductModel} from "../../models/product.model";
 
 @Component({
   selector: 'app-product-item-component',
-  templateUrl: './product-item-component.component.html',
-  styleUrls: ['./product-item-component.component.scss']
+  templateUrl: './product-item.component.html',
+  styleUrls: ['./product-item.component.scss']
 })
-export class ProductItemComponentComponent implements OnInit {
+export class ProductItemComponent implements OnInit {
   @Input() product!: ProductModel;
   @Output() addItemToCart = new EventEmitter<ProductModel>();
 

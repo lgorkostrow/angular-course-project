@@ -1,5 +1,15 @@
 # Changelog
 
+## Task 3. Services and DI
+### Added
+* Added LocalStorageService and SessionStorage services
+* Added caching the cart in the local storage
+* Added ConfigService
+* Added SessionID generation with a factory method
+
+### Changed
+* Renamed product components, services and models
+
 ## Task 2. Components
 ### Added
 * Added Highlight directive

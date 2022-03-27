@@ -1,27 +1,26 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ProductRepository} from "./product/services/product-repository";
-import {CartService} from "./cart/services/cart-service";
+import {ConfigService} from "./core/services/config.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  // не самое лучшее место для регистрации сервисов, разберем на следующей теме
-  providers: [
-    ProductRepository,
-    CartService,
-  ],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  @ViewChild('appTitle') public title!: ElementRef<HTMLHeadingElement>;
+  @ViewChild('appTitle') title!: ElementRef<HTMLHeadingElement>;
 
-  constructor() {
+  constructor(
+    private configService: ConfigService
+  ) {
   }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
+    this.configService.initialize(
+      {id: 12, fullName: 'Vasya Pupkin', email: 'vasya@gmail.com'}
+    );
   }
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.title.nativeElement.innerText = 'Test title';
   }
 }

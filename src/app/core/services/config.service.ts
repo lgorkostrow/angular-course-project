@@ -6,7 +6,7 @@ import {APP_CONFIG, AppConfig} from "./constant.service";
 import {GeneratorService} from "./generator.service";
 import {SESSION_ID} from "./generator.factory";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ConfigService {
   private config!: ConfigModel;
 

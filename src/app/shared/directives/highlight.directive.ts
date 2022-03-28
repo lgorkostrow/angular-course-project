@@ -1,7 +1,7 @@
 import {Directive, HostBinding, HostListener, Input, Renderer2} from '@angular/core';
 
 @Directive({
-  selector: '[appHighlightDirective]'
+  selector: '[appHighlight]'
 })
 export class HighlightDirective {
   @Input() defaultColor: string = '#FFFFFF';

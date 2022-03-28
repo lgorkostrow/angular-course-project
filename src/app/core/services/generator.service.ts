@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class GeneratorService {
   generate(n: number): string {
     const allCapsAlpha = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];

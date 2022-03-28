@@ -5,7 +5,7 @@ import {Inject, Injectable} from "@angular/core";
 import {Collection} from "../../core/services/collection";
 import {APP_CONFIG, AppConfig} from "../../core/services/constant.service";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CartService {
   private _items: Collection<CartItemModel>;
 

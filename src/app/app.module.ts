@@ -26,9 +26,6 @@ import {GeneratorService} from "./core/services/generator.service";
     CartModule,
   ],
   providers: [
-    ProductRepository,
-    CartService,
-    ConfigService,
     { provide: LocalStorageService, useValue: new StorageService(window.localStorage) },
     { provide: APP_CONFIG, useValue: APP_DI_CONFIG },
     { provide: SESSION_ID, useFactory: GeneratorFactory(20), deps: [GeneratorService] },

@@ -2,7 +2,7 @@ import {BaseRepository} from "../../core/services/base.repository";
 import {CategoryEnum, ProductModel} from "../models/product.model";
 import {Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProductRepository extends BaseRepository {
   getProducts(): Promise<ProductModel[]> {
     const productList: ProductModel[] = [

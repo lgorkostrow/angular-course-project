@@ -33,6 +33,7 @@ export class CartService {
       .get<SerializedCartItemModel[]>(appConstants.CartStorageKey)
       .map(x => CartItemModel.createFromSerializedModel(x));
 
+    // решение интересное, но для даной задачи выглядит немного громоздко.
     this._items = new Collection<CartItemModel>(
       stored,
       (items: CartItemModel[]) => this.storage.set(appConstants.CartStorageKey, items)

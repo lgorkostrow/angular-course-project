@@ -6,9 +6,7 @@ import {ConfigService} from "./core/services/config.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
-  @ViewChild('appTitle') title!: ElementRef<HTMLHeadingElement>;
-
+export class AppComponent implements OnInit {
   constructor(
     private configService: ConfigService
   ) {
@@ -18,9 +16,5 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.configService.initialize(
       {id: 12, fullName: 'Vasya Pupkin', email: 'vasya@gmail.com'}
     );
-  }
-
-  ngAfterViewInit(): void {
-    this.title.nativeElement.innerText = 'Test title';
   }
 }

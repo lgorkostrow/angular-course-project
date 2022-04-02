@@ -1,5 +1,18 @@
 # Changelog
 
+## Task 4. Pipes
+### Added
+* Added angular material
+* Added Dropdown component 
+* Added OrderByPipe
+
+### Changed
+* Reworked CartListComponent, replaced item list with a table
+* Reworked ProductList and ProductItem, added material styles
+
+### Removed 
+* CartItemComponent
+
 ## Task 3. Services and DI
 ### Added
 * Added LocalStorageService and SessionStorage services

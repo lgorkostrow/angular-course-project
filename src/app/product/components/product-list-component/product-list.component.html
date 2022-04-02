@@ -1,4 +1,9 @@
-<app-product-item-component
-  *ngFor="let product of products" [product]="product"
-  (addItemToCart)="onAddItemToCart($event)"
-></app-product-item-component>
+<div fxLayout="row wrap"
+     fxLayout.lt-sm="column"
+     fxLayoutGap="32px"
+     fxLayoutAlign="flex-start">
+  <app-product-item-component
+    *ngFor="let product of products" [product]="product"
+    (addItemToCart)="onAddItemToCart($event)">
+  </app-product-item-component>
+</div>

@@ -8,6 +8,8 @@ import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSortModule} from "@angular/material/sort";
+import {CartRoutingModule} from "./cart-routing.module";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import {MatSortModule} from "@angular/material/sort";
     MatIconModule,
     MatButtonModule,
     MatSortModule,
+    MatCardModule,
+    CartRoutingModule,
   ]
 })
 export class CartModule { }

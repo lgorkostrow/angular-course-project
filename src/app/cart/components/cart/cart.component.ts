@@ -21,6 +21,10 @@ export class CartComponent implements OnInit {
     return this.cartService.totalQuantity;
   }
 
+  get isEmptyCart(): boolean {
+    return this.cartService.isEmptyCart();
+  }
+
   constructor(
     private cartService: CartService,
   ) { }

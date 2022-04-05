@@ -9,6 +9,11 @@ import {MatSelectModule} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
 import {ToolbarComponent} from './components/toolbar/toolbar.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import {IsEmptyCartGuard} from "./guards/is-empty-cart.guard";
 
 @NgModule({
   declarations: [
@@ -17,13 +22,17 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     OrderByPipe,
     DropdownSelectComponent,
     ToolbarComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     CommonModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatButtonModule
   ],
   exports: [
     HighlightDirective,

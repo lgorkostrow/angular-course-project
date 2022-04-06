@@ -1,9 +1,8 @@
 import {Inject, Injectable} from "@angular/core";
 import {SessionStorageService, StorageService} from "./storage.service";
 import {ConfigModel} from "../models/config.model";
-import {UserModel} from "../models/user.model";
+import {RoleEnum, UserModel} from "../models/user.model";
 import {APP_CONFIG, AppConfig} from "./constant.service";
-import {GeneratorService} from "./generator.service";
 import {SESSION_ID} from "./generator.factory";
 
 @Injectable({providedIn: 'root'})
@@ -21,21 +20,15 @@ export class ConfigService {
     return this.config !== undefined;
   }
 
-  initialize(user: UserModel): void {
-    if (this.isInitialized()) {
-      return;
-    }
-
-    if (this.storage.isKeyExists(this.appConstants.ConfigStorageKey)) {
+  initialize(user: UserModel, updateStorage: boolean = false): void {
+    if (this.storage.isKeyExists(this.appConstants.ConfigStorageKey) && !updateStorage) {
       this.config = this.storage.get<ConfigModel>(this.appConstants.ConfigStorageKey);
 
       return;
     }
 
     this.config = {
-      id: user.id,
-      fullName: user.fullName,
-      email: user.email,
+      ...user,
       sessionId: this.sessionId,
     };
     this.storage.set(this.appConstants.ConfigStorageKey, this.config);
@@ -43,6 +36,10 @@ export class ConfigService {
 
   getConfig(): ConfigModel {
     return this.config;
+  }
+
+  isCurrentUserAdmin(): boolean {
+    return this.getConfig().role === RoleEnum.Admin;
   }
 
   setConfig(config: Partial<ConfigModel>): ConfigModel {

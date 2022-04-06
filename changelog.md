@@ -5,6 +5,8 @@
 * Added IsCartEmptyGuard
 * Added ProcessOrderComponent
 * Added ProductViewPageComponent
+* Added AdminModule with AdminGuard
+* Added ProductResolver guard
 
 ### Changed
 * Changed ProductModule structure

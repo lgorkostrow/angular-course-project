@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ProductComponent } from './components/product/product.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
@@ -12,6 +11,7 @@ import {ProductListComponent} from "./components/product-list-page/product-list/
 import {ProductItemComponent} from "./components/product-list-page/product-item/product-item.component";
 import {ProductViewPageComponent} from "./components/product-view-page/product-view-page.component";
 import { ProductCardComponent } from './components/product-view-page/product-card/product-card.component';
+import {SharedModule} from "../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { ProductCardComponent } from './components/product-view-page/product-car
     ProductComponent,
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     MatCardModule,
     MatButtonModule,
     MatGridListModule,

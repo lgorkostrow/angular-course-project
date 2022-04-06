@@ -2,7 +2,6 @@ import {Pipe, PipeTransform} from "@angular/core";
 
 @Pipe({name: 'orderBy', pure: false})
 export class OrderByPipe implements PipeTransform {
-  // можно добавить ограничение
   transform<T extends object>(arr: T[], field: string, isAsc: boolean): T[] {
     if (arr.length === 0) {
       return arr;

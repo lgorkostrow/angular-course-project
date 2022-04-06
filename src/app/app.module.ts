@@ -16,6 +16,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {OrderModule} from "./order/order.module";
+import {AdminModule} from "./admin/admin.module";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {OrderModule} from "./order/order.module";
     MatSidenavModule,
     MatButtonModule,
     MatListModule,
+    AdminModule,
     AppRoutingModule,
   ],
   providers: [

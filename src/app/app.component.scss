@@ -1,0 +1,23 @@
+.app-container {
+  width: 100%;
+  height: 100%;
+}
+
+.app-sidenav-content {
+  height: 100%;
+}
+
+.app-sidenav {
+  padding: 20px;
+  width: 250px;
+}
+
+mat-list mat-list-item a {
+  color: #000000;
+  text-decoration: none;
+}
+
+.active {
+  color: #7D7D7D !important;
+  cursor: default;
+}

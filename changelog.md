@@ -1,5 +1,16 @@
 # Changelog
 
+## Task 5. Routing
+### Added
+* Added IsCartEmptyGuard
+* Added ProcessOrderComponent
+* Added ProductViewPageComponent
+* Added AdminModule with AdminGuard
+* Added ProductResolver guard
+
+### Changed
+* Changed ProductModule structure
+
 ## Task 4. Pipes
 ### Added
 * Added angular material

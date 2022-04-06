@@ -1,5 +1,25 @@
-<app-toolbar></app-toolbar>
-
-<app-product></app-product>
-<hr>
-<app-cart></app-cart>
+<app-toolbar (sidenavToggle)="drawer.toggle()"></app-toolbar>
+<mat-drawer-container class="app-container" autosize>
+  <mat-drawer #drawer class="app-sidenav" mode="side">
+    <app-dropdown-select placeholder="Role" [items]="roleList" (itemSelected)="onRoleChange($event)"></app-dropdown-select>
+    <mat-list>
+      <mat-list-item>
+        <a [routerLink]="['products']" routerLinkActive="active">Products</a>
+      </mat-list-item>
+      <mat-list-item>
+        <a [routerLink]="['carts']" routerLinkActive="active">Cart</a>
+      </mat-list-item>
+    </mat-list>
+    <mat-list *ngIf="isCurrentUserAdmin">
+      <mat-list-item>
+        <a [routerLink]="['admin/dashboard']" routerLinkActive="active">Admin</a>
+      </mat-list-item>
+      <mat-list-item>
+        <a [routerLink]="['admin/products']" routerLinkActive="active">Admin Products</a>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+  <div class="app-sidenav-content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>

@@ -1,5 +1,11 @@
 <p>
   <mat-toolbar color="primary">
+    <button mat-icon-button
+            class="example-icon"
+            (click)="onSidenavToggle()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
     <span #appTitle></span>
     <span class="example-spacer"></span>
   </mat-toolbar>

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,6 +7,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 })
 export class ToolbarComponent implements OnInit, AfterViewInit {
   @ViewChild('appTitle') title!: ElementRef<HTMLHeadingElement>;
+  @Output() sidenavToggle = new EventEmitter();
 
   constructor() { }
 
@@ -15,5 +16,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.title.nativeElement.innerText = 'Test App';
+  }
+
+  onSidenavToggle(): void {
+    this.sidenavToggle.emit();
   }
 }

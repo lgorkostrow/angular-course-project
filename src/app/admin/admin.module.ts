@@ -5,16 +5,20 @@ import { AdminDashboardPageComponent } from './components/admin-dashboard-page/a
 import { AdminProductsPageComponent } from './components/admin-products-page/admin-products-page.component';
 import { AdminProductEditPageComponent } from './components/admin-product-edit-page/admin-product-edit-page.component';
 import { AdminProductCreatePageComponent } from './components/admin-product-create-page/admin-product-create-page.component';
+import { AdminComponent } from './components/admin/admin.component';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
     AdminDashboardPageComponent,
     AdminProductsPageComponent,
     AdminProductEditPageComponent,
-    AdminProductCreatePageComponent
+    AdminProductCreatePageComponent,
+    AdminComponent
   ],
   imports: [
     SharedModule,
+    MatListModule,
     AdminRoutingModule,
   ]
 })

@@ -8,18 +8,22 @@ import {
 } from "./components/admin-product-create-page/admin-product-create-page.component";
 import {AdminProductEditPageComponent} from "./components/admin-product-edit-page/admin-product-edit-page.component";
 import {AdminGuard} from "../shared/guards/admin.guard";
+import {AdminComponent} from "./components/admin/admin.component";
 
 const routes: Routes = [
   {
-    path: '', canActivate: [AdminGuard], children: [
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AdminGuard],
+    children: [
       {
-        path: 'admin/product/edit/:productID',
+        path: 'product/edit/:productID',
         component: AdminProductEditPageComponent,
         ...resolveProductWithRedirect('/admin/products'),
       },
-      { path: 'admin/product/add', component: AdminProductCreatePageComponent },
-      { path: 'admin/products', component: AdminProductsPageComponent },
-      { path: 'admin/dashboard', component: AdminDashboardPageComponent },
+      { path: 'product/add', component: AdminProductCreatePageComponent },
+      { path: 'products', component: AdminProductsPageComponent },
+      { path: 'dashboard', component: AdminDashboardPageComponent },
     ]
   }
 ];

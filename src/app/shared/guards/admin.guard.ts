@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {ConfigService} from "../../core/services/config.service";
 import {Injectable} from "@angular/core";
 
@@ -6,13 +6,11 @@ import {Injectable} from "@angular/core";
 export class AdminGuard implements CanActivate {
   constructor(private configService: ConfigService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
     if (this.configService.isCurrentUserAdmin()) {
       return true;
     }
 
-    this.router.navigateByUrl('/page-not-found');
-
-    return false;
+    return this.router.parseUrl('/page-not-found');
   }
 }

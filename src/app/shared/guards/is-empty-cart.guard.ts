@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {CartService} from "../../cart/services/cart.service";
 import {Injectable} from "@angular/core";
 
@@ -6,13 +6,11 @@ import {Injectable} from "@angular/core";
 export class IsEmptyCartGuard implements CanActivate {
   constructor(private cartService: CartService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
     if (!this.cartService.isEmptyCart()) {
       return true;
     }
 
-    this.router.navigateByUrl('/products');
-
-    return false;
+    return this.router.parseUrl('/products');
   }
 }

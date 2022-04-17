@@ -1,18 +1,21 @@
 import {Inject, Injectable} from "@angular/core";
 import {SessionStorageService, StorageService} from "./storage.service";
 import {ConfigModel} from "../models/config.model";
-import {RoleEnum, UserModel} from "../models/user.model";
 import {APP_CONFIG, AppConfig} from "./constant.service";
-import {SESSION_ID} from "./generator.factory";
+import {ConfigurationRepository} from "./configuration.repository";
+import {take} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class ConfigService {
-  private config!: ConfigModel;
+  private defaultConfig: ConfigModel = {
+    retryCount: 1,
+  };
+  private config: ConfigModel = this.defaultConfig;
 
   constructor(
     @Inject(SessionStorageService) private storage: StorageService,
     @Inject(APP_CONFIG) private appConstants: AppConfig,
-    @Inject(SESSION_ID) private sessionId: string,
+    private configRepository: ConfigurationRepository,
   ) {
   }
 
@@ -20,26 +23,28 @@ export class ConfigService {
     return this.config !== undefined;
   }
 
-  initialize(user: UserModel, updateStorage: boolean = false): void {
+  initialize(updateStorage: boolean = false): void {
     if (this.storage.isKeyExists(this.appConstants.ConfigStorageKey) && !updateStorage) {
       this.config = this.storage.get<ConfigModel>(this.appConstants.ConfigStorageKey);
 
       return;
     }
 
-    this.config = {
-      ...user,
-      sessionId: this.sessionId,
-    };
     this.storage.set(this.appConstants.ConfigStorageKey, this.config);
+
+    this.configRepository.getConfiguration()
+      .pipe(
+        take(1),
+      )
+      .subscribe(config => {
+        this.config = config;
+        this.storage.set(this.appConstants.ConfigStorageKey, this.config);
+      })
+    ;
   }
 
   getConfig(): ConfigModel {
     return this.config;
-  }
-
-  isCurrentUserAdmin(): boolean {
-    return this.getConfig().role === RoleEnum.Admin;
   }
 
   setConfig(config: Partial<ConfigModel>): ConfigModel {

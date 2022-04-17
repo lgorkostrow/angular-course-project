@@ -17,6 +17,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {OrderModule} from "./order/order.module";
 import {AdminModule} from "./admin/admin.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {AdminModule} from "./admin/admin.module";
     MatSidenavModule,
     MatButtonModule,
     MatListModule,
+    HttpClientModule,
     AdminModule,
     AppRoutingModule,
   ],

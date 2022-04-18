@@ -1,5 +1,14 @@
 # Changelog
 
+## Task 6. HttpClient
+### Added 
+* Added json server 
+* Added HttpErrorInterceptor and TimingInterceptor
+* Added SnackbarService
+
+### Changed
+* Changed ProductRepository from Promise to Observable
+
 ## Task 5. Routing
 ### Added
 * Added IsCartEmptyGuard

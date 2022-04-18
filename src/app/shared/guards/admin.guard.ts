@@ -1,13 +1,13 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
-import {ConfigService} from "../../core/services/config.service";
 import {Injectable} from "@angular/core";
+import {AuthService} from "../../core/services/auth.service";
 
 @Injectable({providedIn: 'root'})
 export class AdminGuard implements CanActivate {
-  constructor(private configService: ConfigService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
-    if (this.configService.isCurrentUserAdmin()) {
+    if (this.authService.isCurrentUserAdmin()) {
       return true;
     }
 

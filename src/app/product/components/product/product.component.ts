@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {ProductModel} from "../../models/product.model";
 import {ProductRepository} from "../../services/product.repository";
 import {CartService} from "../../../cart/services/cart.service";
@@ -10,8 +10,6 @@ import {SnackbarService} from "../../../core/services/snackbar.service";
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent {
-  products: ProductModel[] = [];
-
   constructor(
     protected productRepository: ProductRepository,
     protected cartService: CartService,
@@ -20,6 +18,6 @@ export class ProductComponent {
 
   addProductToCart(item: ProductModel): void {
     this.cartService.addItemToCart(item);
-    this.snackbarService.open('Product Added');
+    this.snackbarService.message('Product Added');
   }
 }

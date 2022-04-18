@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ConfigService} from "./core/services/config.service";
 import {RoleEnum} from "./core/models/user.model";
 import {DropdownSelectItemModel} from "./shared/models/dropdown-select-item.model";
+import {AuthService} from "./core/services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -15,17 +16,19 @@ export class AppComponent implements OnInit {
     new DropdownSelectItemModel('Admin', RoleEnum.Admin, false),
   ];
 
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
-    this.configService.initialize(
-      { id: 12, fullName: 'Vasya Pupkin', email: 'vasya@gmail.com', role: RoleEnum.User }
-    );
-    this.isCurrentUserAdmin = this.configService.isCurrentUserAdmin();
+    this.configService.initialize();
+    this.authService.authorize();
+    this.isCurrentUserAdmin = this.authService.isCurrentUserAdmin();
   }
 
   onRoleChange(event: DropdownSelectItemModel<RoleEnum>): void {
-    this.configService.setConfig({ role: event.value });
-    this.isCurrentUserAdmin = this.configService.isCurrentUserAdmin();
+    this.authService.updateRole(event.value);
+    this.isCurrentUserAdmin = this.authService.isCurrentUserAdmin();
   }
 }

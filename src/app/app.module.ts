@@ -1,4 +1,4 @@
-import {DEFAULT_CURRENCY_CODE, NgModule} from '@angular/core';
+import {DEFAULT_CURRENCY_CODE, InjectionToken, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -18,6 +18,12 @@ import {MatListModule} from "@angular/material/list";
 import {OrderModule} from "./order/order.module";
 import {AdminModule} from "./admin/admin.module";
 import {HttpClientModule} from "@angular/common/http";
+import {environment} from "../environments/environment";
+import {Environment} from "./core/models/environment";
+
+export const ENV_TOKEN = new InjectionToken<Environment>(
+  'app.environment.token'
+);
 
 @NgModule({
   declarations: [
@@ -43,6 +49,7 @@ import {HttpClientModule} from "@angular/common/http";
     {provide: APP_CONFIG, useValue: APP_DI_CONFIG},
     {provide: SESSION_ID, useFactory: GeneratorFactory(20), deps: [GeneratorService]},
     {provide: DEFAULT_CURRENCY_CODE, useValue: 'USD'},
+    {provide: ENV_TOKEN, useFactory: () => environment},
   ],
   bootstrap: [AppComponent]
 })

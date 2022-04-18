@@ -1,20 +1,25 @@
 import {BaseRepository} from "../../core/services/base.repository";
 import {ProductModel} from "../models/product.model";
-import {Injectable} from "@angular/core";
+import {Inject, Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Environment} from "../../core/models/environment";
+import {ENV_TOKEN} from "../../app.module";
 
 @Injectable({providedIn: 'root'})
 export class ProductRepository extends BaseRepository {
-  constructor(httClient: HttpClient) {
-    super(httClient);
+  constructor(
+    @Inject(ENV_TOKEN) env: Environment,
+    httClient: HttpClient,
+  ) {
+    super(env.apiUrl!, httClient);
   }
 
   getProducts(): Observable<ProductModel[]> {
-    return this.sendGet<ProductModel[]>('/api/products');
+    return this.sendGet<ProductModel[]>('/products');
   }
 
   getProduct(id: number): Observable<ProductModel> {
-    return this.sendGet<ProductModel>(`/api/products/${id}`);
+    return this.sendGet<ProductModel>(`/products/${id}`);
   }
 }

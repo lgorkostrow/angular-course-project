@@ -1,6 +1,6 @@
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {EMPTY, Observable} from "rxjs";
-import {catchError, concat, delay, map, retry, retryWhen, take, timeInterval} from "rxjs/operators";
+import {catchError, concat, delay, map, retry, retryWhen, share, take, timeInterval} from "rxjs/operators";
 import {SnackbarService} from "./snackbar.service";
 import {Injectable} from "@angular/core";
 import {Location} from "@angular/common";
@@ -18,6 +18,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req)
       .pipe(
+        share(),
         retryWhen(errors => {
           let count = 0;
 

@@ -19,6 +19,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(req)
       .pipe(
         share(),
+        // в rxjs v7 уже deprecated
+        // расширили возможности retry
         retryWhen(errors => {
           let count = 0;
 

@@ -1,1 +1,6 @@
-<app-product-card *ngIf="product" [product]="product" (addItemToCart)="onBuy($event)"></app-product-card>
+<mat-spinner *ngIf="showProgress" style="margin:0 auto;"></mat-spinner>
+<app-product-card
+  *ngIf="product"
+  [product]="product"
+  (addItemToCart)="onBuy($event)">
+</app-product-card>

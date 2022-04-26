@@ -1,18 +1,35 @@
-import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
 import {ProductModel} from "../../product/models/product.model";
-import {ProductRepository} from "../../product/services/product.repository";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
+import {Action, Store} from "@ngrx/store";
+import {AppState} from "../../store/app.reducer";
+import {map, take} from "rxjs/operators";
 
-export function resolveProductWithRedirect(redirectUrl: string) {
-  return {data: {redirectUrl}, resolve: {product: ProductResolver}};
+export function storeProductResolver(store: string, fetchAction: Action) {
+  return {
+    data: {
+      store,
+      fetchAction,
+    },
+    resolve: {product: ProductResolver}
+  };
 }
 
 @Injectable({providedIn: 'root'})
 export class ProductResolver implements Resolve<ProductModel> {
-  constructor(private productRepository: ProductRepository) {}
+  constructor(private store: Store<AppState>) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ProductModel> {
-    return this.productRepository.getProduct(+route.params['productID']);
+    const fetchAction = Object.assign({}, route.data.fetchAction)
+    fetchAction.payload = +route.params['productID'];
+
+    this.store.dispatch(fetchAction);
+
+    return this.store.select(route.data.store)
+      .pipe(
+        take(1),
+        map(data => data.selectedProduct!)
+      );
   }
 }

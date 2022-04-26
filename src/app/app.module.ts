@@ -20,6 +20,11 @@ import {AdminModule} from "./admin/admin.module";
 import {HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {Environment} from "./core/models/environment";
+import {StoreModule} from "@ngrx/store";
+import {appReducer} from "./store/app.reducer";
+import {EffectsModule} from "@ngrx/effects";
+import {ProductEffects} from "./product/store/product.effects";
+import {CartEffects} from "./cart/store/cart.effects";
 
 export const ENV_TOKEN = new InjectionToken<Environment>(
   'app.environment.token'
@@ -43,6 +48,8 @@ export const ENV_TOKEN = new InjectionToken<Environment>(
     HttpClientModule,
     AdminModule,
     AppRoutingModule,
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([ProductEffects, CartEffects])
   ],
   providers: [
     {provide: LocalStorageService, useValue: new StorageService(window.localStorage)},

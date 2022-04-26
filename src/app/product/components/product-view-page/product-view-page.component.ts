@@ -1,35 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductModel} from "../../models/product.model";
-import {ProductRepository} from "../../services/product.repository";
-import {ActivatedRoute, Data} from "@angular/router";
-import {CartService} from "../../../cart/services/cart.service";
 import {ProductComponent} from "../product/product.component";
-import {SnackbarService} from "../../../core/services/snackbar.service";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../../store/app.reducer";
+import {Subscription} from "rxjs";
+import {AddProductToCartAction} from "../../../cart/store/cart.actions";
 
 @Component({
   selector: 'app-product-view-page',
   templateUrl: './product-view-page.component.html',
   styleUrls: ['./product-view-page.component.scss']
 })
-export class ProductViewPageComponent extends ProductComponent implements OnInit {
+export class ProductViewPageComponent extends ProductComponent implements OnInit, OnDestroy {
   product!: ProductModel;
 
+  private subscription!: Subscription
+
   constructor(
-    productRepository: ProductRepository,
-    cartService: CartService,
-    snackbarService: SnackbarService,
-    private route: ActivatedRoute,
+    store: Store<AppState>,
   ) {
-    super(productRepository, cartService, snackbarService);
+    super(store);
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: Data) => {
-      this.product = data['product'];
-    });
+    this.subscription = this.store.select('products')
+      .subscribe(data => {
+        this.product = data.selectedProduct!;
+        this.showProgress = data.loading;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onBuy(product: ProductModel) {
-    this.addProductToCart(product);
+    this.store.dispatch(new AddProductToCartAction(product));
   }
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## Task 7. NgRx
+### Added
+* Added NgRx for Product and Cart module
+
 ## Task 6. HttpClient
 ### Added 
 * Added json server 

@@ -1,11 +1,4 @@
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {
-  ADD_PRODUCT_TO_CART,
-  DECREASE_QUANTITY,
-  FETCH_CART,
-  INCREASE_QUANTITY,
-  SetCartAction
-} from "./cart.actions";
 import {map, switchMap} from "rxjs/operators";
 import {CartRepository} from "../services/cart.repository";
 import {CartItemModel} from "../models/cart-item.model";
@@ -14,20 +7,21 @@ import {Store} from "@ngrx/store";
 import {AppState} from "../../store/app.reducer";
 import {CartState} from "./cart.reducer";
 import {SnackbarService} from "../../core/services/snackbar.service";
+import {addProduct, decreaseQuantity, fetchCart, increaseQuantity, setCart} from "./cart.actions";
 
 @Injectable()
 export class CartEffects {
   fetchCart = createEffect(() => {
     return this.actions$.pipe(
-      ofType(FETCH_CART),
+      ofType(fetchCart),
       switchMap(() => this.cartRepository.getStoredCart()),
-      map((items: CartItemModel[]) => new SetCartAction(items)),
+      map((items: CartItemModel[]) => setCart({items})),
     );
   });
 
   saveInStorage = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ADD_PRODUCT_TO_CART, INCREASE_QUANTITY, DECREASE_QUANTITY),
+      ofType(addProduct, increaseQuantity, decreaseQuantity),
       switchMap(() => this.store.select('cart')),
       map((state: CartState) => {
         this.cartRepository.save(state.items);
@@ -37,8 +31,8 @@ export class CartEffects {
 
   showNotification = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ADD_PRODUCT_TO_CART),
-      map((state: CartState) => {
+      ofType(addProduct),
+      map((data) => {
         this.snackbarService.message('Product Added');
       })
     );

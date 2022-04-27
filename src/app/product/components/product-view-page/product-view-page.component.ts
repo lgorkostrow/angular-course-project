@@ -4,7 +4,7 @@ import {ProductComponent} from "../product/product.component";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app.reducer";
 import {Subscription} from "rxjs";
-import {AddProductToCartAction} from "../../../cart/store/cart.actions";
+import {addProduct} from "../../../cart/store/cart.actions";
 
 @Component({
   selector: 'app-product-view-page',
@@ -35,6 +35,6 @@ export class ProductViewPageComponent extends ProductComponent implements OnInit
   }
 
   onBuy(product: ProductModel) {
-    this.store.dispatch(new AddProductToCartAction(product));
+    this.store.dispatch(addProduct({product}));
   }
 }

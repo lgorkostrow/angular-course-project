@@ -1,5 +1,6 @@
 import {ProductModel} from "../models/product.model";
-import {FETCH_PRODUCT, FETCH_PRODUCTS, ProductAction, SET_PRODUCT, SET_PRODUCTS} from "./product.actions";
+import {Action, createReducer, on} from "@ngrx/store";
+import {fetchProduct, fetchProducts, setProduct, setProducts} from "./product.actions";
 
 export interface ProductState {
   products: ProductModel[];
@@ -13,33 +14,38 @@ const initialState: ProductState = {
   loading: false,
 };
 
-export function productReducer(state: ProductState = initialState, action: ProductAction) {
-  switch (action.type) {
-    case FETCH_PRODUCTS:
-      return {
-        ...state,
-        products: [],
-        loading: true,
-      };
-    case SET_PRODUCTS:
-      return {
-        ...state,
-        products: [...action.payload],
-        loading: false,
-      };
-    case FETCH_PRODUCT:
-      return {
-        ...state,
-        selectedProduct: null,
-        loading: true,
-      };
-    case SET_PRODUCT:
-      return {
-        ...state,
-        selectedProduct: action.payload,
-        loading: false,
-      };
-  }
+const reducer = createReducer(
+  initialState,
+  on(fetchProducts, state => {
+    return {
+      ...state,
+      products: [],
+      loading: true,
+    };
+  }),
+  on(setProducts, (state, {products}) => {
+    return {
+      ...state,
+      products: [...products],
+      loading: false,
+    }
+  }),
+  on(fetchProduct, state => {
+    return {
+      ...state,
+      selectedProduct: null,
+      loading: true,
+    };
+  }),
+  on(setProduct, (state, {product}) => {
+    return {
+      ...state,
+      selectedProduct: product,
+      loading: false,
+    };
+  }),
+);
 
-  return state;
+export function productReducer(state: ProductState | undefined, action: Action) {
+  return reducer(state, action);
 }

@@ -1,13 +1,7 @@
 import {CartItemModel} from "../models/cart-item.model";
-import {
-  ADD_PRODUCT_TO_CART,
-  CartAction,
-  DECREASE_QUANTITY,
-  DELETE_ITEM,
-  INCREASE_QUANTITY,
-  SET_CART
-} from "./cart.actions";
+import {addProduct, decreaseQuantity, deleteItem, increaseQuantity, setCart} from "./cart.actions";
 import {ProductModel} from "../../product/models/product.model";
+import {Action, createReducer, on} from "@ngrx/store";
 
 export interface CartState {
   items: CartItemModel[];
@@ -23,24 +17,30 @@ const initialState: CartState = {
   isEmpty: true,
 };
 
-export function cartReducer(state: CartState = initialState, action: CartAction) {
-  switch (action.type) {
-    case SET_CART:
-      return {
-        ...state,
-        ...updateCartData(action.payload),
-      };
-    case ADD_PRODUCT_TO_CART:
-      return addProductToCartHandler(state, action.payload);
-    case INCREASE_QUANTITY:
-      return increaseQuantityHandler(state, action.payload);
-    case DECREASE_QUANTITY:
-      return decreaseQuantityHandler(state, action.payload);
-    case DELETE_ITEM:
-      return deleteItemHandler(state, action.payload);
-  }
+const reducer = createReducer(
+  initialState,
+  on(setCart, (state, {items}) => {
+    return {
+      ...state,
+      ...updateCartData(items),
+    };
+  }),
+  on(addProduct, (state, {product}) => {
+    return addProductToCartHandler(state, product);
+  }),
+  on(increaseQuantity, (state, {productId}) => {
+    return increaseQuantityHandler(state, productId);
+  }),
+  on(decreaseQuantity, (state, {productId}) => {
+    return decreaseQuantityHandler(state, productId);
+  }),
+  on(deleteItem, (state, {productId}) => {
+    return deleteItemHandler(state, productId);
+  }),
+);
 
-  return state;
+export function cartReducer(state: CartState | undefined, action: Action) {
+  return reducer(state, action);
 }
 
 const addProductToCartHandler = (state: CartState, product: ProductModel): CartState => {

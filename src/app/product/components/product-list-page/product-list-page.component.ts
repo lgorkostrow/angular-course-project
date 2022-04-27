@@ -4,8 +4,8 @@ import {ProductComponent} from "../product/product.component";
 import {Subscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app.reducer";
-import {FetchProductsAction} from "../../store/product.actions";
-import {AddProductToCartAction} from "../../../cart/store/cart.actions";
+import {addProduct} from "../../../cart/store/cart.actions";
+import {fetchProducts} from "../../store/product.actions";
 
 @Component({
   selector: 'app-product-list-page',
@@ -24,7 +24,7 @@ export class ProductListPageComponent extends ProductComponent implements OnInit
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new FetchProductsAction());
+    this.store.dispatch(fetchProducts());
 
     this.subscription = this.store.select('products')
       .subscribe(data => {
@@ -33,8 +33,8 @@ export class ProductListPageComponent extends ProductComponent implements OnInit
       });
   }
 
-  onBuy(item: ProductModel): void {
-    this.store.dispatch(new AddProductToCartAction(item));
+  onBuy(product: ProductModel): void {
+    this.store.dispatch(addProduct({product}));
   }
 
   ngOnDestroy(): void {

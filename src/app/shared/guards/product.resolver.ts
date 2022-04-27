@@ -21,10 +21,7 @@ export class ProductResolver implements Resolve<ProductModel> {
   constructor(private store: Store<AppState>) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ProductModel> {
-    const fetchAction = Object.assign({}, route.data.fetchAction)
-    fetchAction.payload = +route.params['productID'];
-
-    this.store.dispatch(fetchAction);
+    this.store.dispatch(route.data.fetchAction({productId: +route.params['productID']}));
 
     return this.store.select(route.data.store)
       .pipe(

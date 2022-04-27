@@ -1,33 +1,27 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {
-  FETCH_PRODUCT,
-  FETCH_PRODUCTS,
-  FetchProductAction,
-  SetProductAction,
-  SetProductsAction
-} from "./product.actions";
 import {map, switchMap} from "rxjs/operators";
 import {ProductRepository} from "../services/product.repository";
 import {ProductModel} from "../models/product.model";
+import {fetchProduct, fetchProducts, setProduct, setProducts} from "./product.actions";
 
 @Injectable()
 export class ProductEffects {
   fetchProducts = createEffect(() => {
     return this.actions$.pipe(
-      ofType(FETCH_PRODUCTS),
+      ofType(fetchProducts),
       switchMap(() => this.productRepository.getProducts()),
-      map((products: ProductModel[]) => new SetProductsAction(products)),
+      map((products: ProductModel[]) => setProducts({products})),
     );
   });
 
   fetchProduct = createEffect(() => {
     return this.actions$.pipe(
-      ofType(FETCH_PRODUCT),
-      switchMap((data: FetchProductAction) => {
-        return this.productRepository.getProduct(data.payload);
+      ofType(fetchProduct),
+      switchMap((data) => {
+        return this.productRepository.getProduct(data.productId);
       }),
-      map((product: ProductModel) => new SetProductAction(product)),
+      map((product: ProductModel) => setProduct({product})),
     );
   });
 

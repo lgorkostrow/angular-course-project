@@ -4,7 +4,7 @@ import {ProductListPageComponent} from "./components/product-list-page/product-l
 import {ProductViewPageComponent} from "./components/product-view-page/product-view-page.component";
 import {storeProductResolver} from "../shared/guards/product.resolver";
 import {ProductComponent} from "./components/product/product.component";
-import {FetchProductAction} from "./store/product.actions";
+import {fetchProduct} from "./store/product.actions";
 
 const routes: Routes = [
   {
@@ -14,7 +14,7 @@ const routes: Routes = [
       {
         path: ':productID',
         component: ProductViewPageComponent,
-        ...storeProductResolver('products', new FetchProductAction(0)),
+        ...storeProductResolver('products', fetchProduct),
       },
       { path: '', component: ProductListPageComponent },
     ],

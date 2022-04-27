@@ -2,13 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartItemModel} from "../../models/cart-item.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app.reducer";
-import {
-  DecreaseQuantityAction,
-  DeleteItemAction,
-  FetchCartAction,
-  IncreaseQuantityAction
-} from "../../store/cart.actions";
 import {Subscription} from "rxjs";
+import {decreaseQuantity, deleteItem, fetchCart, increaseQuantity} from "../../store/cart.actions";
 
 @Component({
   selector: 'app-cart',
@@ -28,7 +23,7 @@ export class CartComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new FetchCartAction());
+    this.store.dispatch(fetchCart());
 
     this.subscription = this.store.select('cart')
       .subscribe(data => {
@@ -44,14 +39,14 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onIncreaseCartItem(productId: number): void {
-    this.store.dispatch(new IncreaseQuantityAction(productId));
+    this.store.dispatch(increaseQuantity({productId}));
   }
 
   onDecreaseCartItem(productId: number): void {
-    this.store.dispatch(new DecreaseQuantityAction(productId));
+    this.store.dispatch(decreaseQuantity({productId}));
   }
 
   onDeleteCartItem(productId: number): void {
-    this.store.dispatch(new DeleteItemAction(productId));
+    this.store.dispatch(deleteItem({productId}));
   }
 }

@@ -2,8 +2,14 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartItemModel} from "../../models/cart-item.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app.reducer";
-import {Subscription} from "rxjs";
+import {Observable, of, Subscription} from "rxjs";
 import {decreaseQuantity, deleteItem, fetchCart, increaseQuantity} from "../../store/cart.actions";
+import {
+  selectCartIsEmpty,
+  selectCartItems,
+  selectCartTotalQuantity,
+  selectCartTotalSum
+} from "../../../store/cart.selectors";
 
 @Component({
   selector: 'app-cart',
@@ -11,10 +17,10 @@ import {decreaseQuantity, deleteItem, fetchCart, increaseQuantity} from "../../s
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit, OnDestroy {
-  cartItems: CartItemModel[] = [];
-  cartTotalSum = 0;
-  cartTotalQuantity = 0;
-  isEmptyCart = true;
+  cartItems: Observable<CartItemModel[]> = of([]);
+  cartTotalSum: Observable<number> = of(0);
+  cartTotalQuantity: Observable<number> = of(0);
+  isEmptyCart: Observable<boolean> = of(true);
 
   private subscription!: Subscription
 
@@ -25,13 +31,10 @@ export class CartComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(fetchCart());
 
-    this.subscription = this.store.select('cart')
-      .subscribe(data => {
-        this.cartItems = [...data.items];
-        this.cartTotalSum = data.totalSum;
-        this.cartTotalQuantity = data.totalQuantity;
-        this.isEmptyCart = data.isEmpty;
-      });
+    this.cartItems = this.store.select(selectCartItems);
+    this.cartTotalSum = this.store.select(selectCartTotalSum);
+    this.cartTotalQuantity = this.store.select(selectCartTotalQuantity);
+    this.isEmptyCart = this.store.select(selectCartIsEmpty);
   }
 
   ngOnDestroy(): void {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app.reducer";
+import {Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-product',
@@ -8,7 +9,7 @@ import {AppState} from "../../../store/app.reducer";
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent {
-  showProgress: boolean = false;
+  showProgress: Observable<boolean> = of(false);
 
   constructor(
     protected store: Store<AppState>,

@@ -1,6 +1,6 @@
-<mat-spinner *ngIf="showProgress" style="margin:0 auto;"></mat-spinner>
+<mat-spinner *ngIf="showProgress | async" style="margin:0 auto;"></mat-spinner>
 <app-product-card
-  *ngIf="product"
-  [product]="product"
+  *ngIf="product | async"
+  [product]="(product | async)!"
   (addItemToCart)="onBuy($event)">
 </app-product-card>

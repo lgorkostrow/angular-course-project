@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ProductModel} from "../../../models/product.model";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-product-list-component',
@@ -7,7 +8,7 @@ import {ProductModel} from "../../../models/product.model";
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent {
-  @Input() products: ProductModel[] = [];
+  @Input() products!: Observable<ProductModel[]>;
   @Output() addItemToCart = new EventEmitter<ProductModel>();
 
   onBuy(product: ProductModel): void {

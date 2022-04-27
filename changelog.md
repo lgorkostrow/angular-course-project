@@ -3,6 +3,7 @@
 ## Task 7. NgRx
 ### Added
 * Added NgRx for Product and Cart module
+* Added feature and state selectors for product and cart states
 
 ## Task 6. HttpClient
 ### Added 

@@ -1,20 +1,19 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductModel} from "../../models/product.model";
 import {ProductComponent} from "../product/product.component";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app.reducer";
-import {Subscription} from "rxjs";
+import {Observable} from "rxjs";
 import {addProduct} from "../../../cart/store/cart.actions";
+import {selectProductLoading, selectSelectedProduct} from "../../../store/product.selectors";
 
 @Component({
   selector: 'app-product-view-page',
   templateUrl: './product-view-page.component.html',
   styleUrls: ['./product-view-page.component.scss']
 })
-export class ProductViewPageComponent extends ProductComponent implements OnInit, OnDestroy {
-  product!: ProductModel;
-
-  private subscription!: Subscription
+export class ProductViewPageComponent extends ProductComponent implements OnInit {
+  product!: Observable<ProductModel | null>;
 
   constructor(
     store: Store<AppState>,
@@ -23,15 +22,8 @@ export class ProductViewPageComponent extends ProductComponent implements OnInit
   }
 
   ngOnInit(): void {
-    this.subscription = this.store.select('products')
-      .subscribe(data => {
-        this.product = data.selectedProduct!;
-        this.showProgress = data.loading;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.product = this.store.select(selectSelectedProduct);
+    this.showProgress = this.store.select(selectProductLoading);
   }
 
   onBuy(product: ProductModel) {

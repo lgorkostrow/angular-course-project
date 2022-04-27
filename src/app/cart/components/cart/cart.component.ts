@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartItemModel} from "../../models/cart-item.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app.reducer";
-import {Observable, of, Subscription} from "rxjs";
+import {Observable, of} from "rxjs";
 import {decreaseQuantity, deleteItem, fetchCart, increaseQuantity} from "../../store/cart.actions";
 import {
   selectCartIsEmpty,
@@ -16,13 +16,11 @@ import {
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit, OnDestroy {
+export class CartComponent implements OnInit {
   cartItems: Observable<CartItemModel[]> = of([]);
   cartTotalSum: Observable<number> = of(0);
   cartTotalQuantity: Observable<number> = of(0);
   isEmptyCart: Observable<boolean> = of(true);
-
-  private subscription!: Subscription
 
   constructor(
     private store: Store<AppState>,
@@ -35,10 +33,6 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartTotalSum = this.store.select(selectCartTotalSum);
     this.cartTotalQuantity = this.store.select(selectCartTotalQuantity);
     this.isEmptyCart = this.store.select(selectCartIsEmpty);
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   onIncreaseCartItem(productId: number): void {

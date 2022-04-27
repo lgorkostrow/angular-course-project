@@ -7,7 +7,8 @@ import {Store} from "@ngrx/store";
 import {AppState} from "../../store/app.reducer";
 import {CartState} from "./cart.reducer";
 import {SnackbarService} from "../../core/services/snackbar.service";
-import {addProduct, decreaseQuantity, fetchCart, increaseQuantity, setCart} from "./cart.actions";
+import {addProduct, decreaseQuantity, deleteItem, fetchCart, increaseQuantity, setCart} from "./cart.actions";
+import {selectCartState} from "../../store/cart.selectors";
 
 @Injectable()
 export class CartEffects {
@@ -21,8 +22,8 @@ export class CartEffects {
 
   saveInStorage = createEffect(() => {
     return this.actions$.pipe(
-      ofType(addProduct, increaseQuantity, decreaseQuantity),
-      switchMap(() => this.store.select('cart')),
+      ofType(addProduct, increaseQuantity, decreaseQuantity, deleteItem),
+      switchMap(() => this.store.select(selectCartState)),
       map((state: CartState) => {
         this.cartRepository.save(state.items);
       })

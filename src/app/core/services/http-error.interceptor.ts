@@ -19,21 +19,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(req)
       .pipe(
         share(),
-        // в rxjs v7 уже deprecated
-        // расширили возможности retry
-        retryWhen(errors => {
-          let count = 0;
-
-          return errors.pipe(
-            delay(100),
-            map(error => {
-              if (count++ === this.configService.getConfig().retryCount) {
-                throw error;
-              }
-              return error;
-            }),
-          )
-        }),
+        retry(this.configService.getConfig().retryCount),
         catchError((error: HttpErrorResponse) => {
           this.snackbarService.error(error.message);
 

@@ -5,7 +5,10 @@ import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app.reducer";
 import {Observable} from "rxjs";
 import {addProduct} from "../../../cart/store/cart.actions";
-import {selectProductLoading, selectSelectedProduct} from "../../../store/product.selectors";
+import {
+  selectProductLoading,
+  selectSelectedProductByUrl
+} from "../../../store/product.selectors";
 
 @Component({
   selector: 'app-product-view-page',
@@ -22,7 +25,7 @@ export class ProductViewPageComponent extends ProductComponent implements OnInit
   }
 
   ngOnInit(): void {
-    this.product = this.store.select(selectSelectedProduct);
+    this.product = this.store.select(selectSelectedProductByUrl);
     this.showProgress = this.store.select(selectProductLoading);
   }
 

@@ -8,3 +8,4 @@ export const addProduct = createAction('[Cart] Add product', props<{product: Pro
 export const increaseQuantity = createAction('[Cart] Increase quantity', props<{productId: ProductModel['id']}>());
 export const decreaseQuantity = createAction('[Cart] Decrease quantity', props<{productId: ProductModel['id']}>());
 export const deleteItem = createAction('[Cart] Delete item', props<{productId: ProductModel['id']}>());
+export const clearCart = createAction('[Cart] Clear cart');

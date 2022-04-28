@@ -1,5 +1,5 @@
 import {CartItemModel} from "../models/cart-item.model";
-import {addProduct, decreaseQuantity, deleteItem, increaseQuantity, setCart} from "./cart.actions";
+import {addProduct, clearCart, decreaseQuantity, deleteItem, increaseQuantity, setCart} from "./cart.actions";
 import {ProductModel} from "../../product/models/product.model";
 import {Action, createReducer, on} from "@ngrx/store";
 
@@ -36,6 +36,12 @@ const reducer = createReducer(
   }),
   on(deleteItem, (state, {productId}) => {
     return deleteItemHandler(state, productId);
+  }),
+  on(clearCart, state => {
+    return {
+      ...state,
+      ...updateCartData([]),
+    };
   }),
 );
 

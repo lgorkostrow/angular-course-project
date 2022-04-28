@@ -25,6 +25,10 @@ import {appReducer} from "./store/app.reducer";
 import {EffectsModule} from "@ngrx/effects";
 import {ProductEffects} from "./product/store/product.effects";
 import {CartEffects} from "./cart/store/cart.effects";
+import {RouterState, StoreRouterConnectingModule} from "@ngrx/router-store";
+import {CustomSerializer} from "./store/router.custom-serializer";
+import {OrderEffects} from "./order/store/order.effects";
+import {RouterEffects} from "./store/router.effects";
 
 export const ENV_TOKEN = new InjectionToken<Environment>(
   'app.environment.token'
@@ -48,8 +52,24 @@ export const ENV_TOKEN = new InjectionToken<Environment>(
     HttpClientModule,
     AdminModule,
     AppRoutingModule,
-    StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([ProductEffects, CartEffects])
+    StoreModule.forRoot(appReducer, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        // router state is not serializable
+        // set false if you don't use CustomSerializer
+        strictStateSerializability: true,
+        // router action is not serializable
+        // set false
+        strictActionSerializability: false
+      }
+    }),
+    EffectsModule.forRoot([ProductEffects, CartEffects, OrderEffects, RouterEffects]),
+    StoreRouterConnectingModule.forRoot({
+      stateKey: 'router',
+      routerState: RouterState.Minimal,
+      serializer: CustomSerializer,
+    }),
   ],
   providers: [
     {provide: LocalStorageService, useValue: new StorageService(window.localStorage)},
@@ -60,5 +80,4 @@ export const ENV_TOKEN = new InjectionToken<Environment>(
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

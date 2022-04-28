@@ -4,7 +4,8 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Action, Store} from "@ngrx/store";
 import {AppState} from "../../store/app.reducer";
-import {map, take} from "rxjs/operators";
+import {take} from "rxjs/operators";
+import {selectSelectedProductAvailableByUrl, selectSelectedProductByUrl} from "../../store/product.selectors";
 
 export function storeProductResolver(store: string, fetchAction: Action) {
   return {
@@ -21,12 +22,17 @@ export class ProductResolver implements Resolve<ProductModel> {
   constructor(private store: Store<AppState>) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ProductModel> {
-    this.store.dispatch(route.data.fetchAction({productId: +route.params['productID']}));
-
-    return this.store.select(route.data.store)
+    let productAvailable = false;
+    this.store.select(selectSelectedProductAvailableByUrl)
       .pipe(
         take(1),
-        map(data => data.selectedProduct!)
-      );
+      )
+      .subscribe((data => productAvailable = data));
+
+    if (!productAvailable) {
+      this.store.dispatch(route.data.fetchAction({productId: +route.params['productID']}));
+    }
+
+    return this.store.select(selectSelectedProductByUrl).pipe(take(1));
   }
 }

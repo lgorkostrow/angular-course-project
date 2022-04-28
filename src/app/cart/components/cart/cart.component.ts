@@ -10,6 +10,8 @@ import {
   selectCartTotalQuantity,
   selectCartTotalSum
 } from "../../../store/cart.selectors";
+import {createOrder} from "../../../order/store/order.actions";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-cart',
@@ -45,5 +47,12 @@ export class CartComponent implements OnInit {
 
   onDeleteCartItem(productId: number): void {
     this.store.dispatch(deleteItem({productId}));
+  }
+
+  onOrder(): void {
+    this.store.select(selectCartItems).pipe(
+      take(1),
+    )
+      .subscribe(cartItems => this.store.dispatch(createOrder({products: cartItems})));
   }
 }

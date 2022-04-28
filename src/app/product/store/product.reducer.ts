@@ -4,13 +4,13 @@ import {fetchProduct, fetchProducts, setProduct, setProducts} from "./product.ac
 
 export interface ProductState {
   products: ProductModel[];
-  selectedProduct: ProductModel | null,
+  productsViewModels: ProductModel[], // The view model can have more fields than the list model
   loading: boolean;
 }
 
 const initialState: ProductState = {
   products: [],
-  selectedProduct: null,
+  productsViewModels: [],
   loading: false,
 };
 
@@ -33,14 +33,16 @@ const reducer = createReducer(
   on(fetchProduct, state => {
     return {
       ...state,
-      selectedProduct: null,
       loading: true,
     };
   }),
   on(setProduct, (state, {product}) => {
+    let models = [...state.productsViewModels];
+    models.push(product);
+
     return {
       ...state,
-      selectedProduct: product,
+      productsViewModels: models,
       loading: false,
     };
   }),

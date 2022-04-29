@@ -3,7 +3,7 @@ import {
   DoCheck,
   EventEmitter,
   Input,
-  IterableDiffers,
+  IterableDiffers, OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -11,16 +11,17 @@ import {CartItemModel} from "../../models/cart-item.model";
 import {Sort} from "@angular/material/sort";
 import {OrderByPipe} from "../../../shared/pipes/order-by.pipe";
 import {MatTableDataSource} from "@angular/material/table";
+import {Observable, of, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-cart-list',
   templateUrl: './cart-list.component.html',
   styleUrls: ['./cart-list.component.scss']
 })
-export class CartListComponent implements OnInit, DoCheck {
-  @Input() items: CartItemModel[] = [];
-  @Input() totalSum = 0;
-  @Input() totalQuantity = 0;
+export class CartListComponent implements OnInit, OnDestroy, DoCheck {
+  @Input('items') items$: Observable<CartItemModel[]> = of([]);
+  @Input() totalSum: Observable<number> = of(0);
+  @Input() totalQuantity: Observable<number> = of(0);
 
   @Output() increaseCartItem = new EventEmitter<CartItemModel['id']>();
   @Output() decreaseCartItem = new EventEmitter<CartItemModel['id']>();
@@ -28,16 +29,26 @@ export class CartListComponent implements OnInit, DoCheck {
 
   displayedColumns = ['name', 'quantity', 'price', 'totalPrice', 'actions'];
   dataSource = new MatTableDataSource<CartItemModel>();
+  items: CartItemModel[] = [];
+
+  private subscription!: Subscription;
 
   constructor(
     private orderByPipe: OrderByPipe,
     private differs: IterableDiffers
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.dataSource.data = this.items;
+    this.subscription = this.items$.subscribe((items) => {
+      this.items = [...items];
+      this.dataSource.data = this.items;
+    });
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
 
   ngDoCheck() {
     if (this.differs.find(this.items)) {

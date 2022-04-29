@@ -1,3 +1,4 @@
+<mat-spinner *ngIf="showProgress | async" style="margin:0 auto;"></mat-spinner>
 <app-product-list-component
   [products]="products"
   (addItemToCart)="onBuy($event)">

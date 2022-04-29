@@ -1,41 +1,35 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductModel} from "../../models/product.model";
-import {ProductRepository} from "../../services/product.repository";
-import {CartService} from "../../../cart/services/cart.service";
-import {SnackbarService} from "../../../core/services/snackbar.service";
 import {ProductComponent} from "../product/product.component";
-import {Subscriber, Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../../store/app.reducer";
+import {addProduct} from "../../../cart/store/cart.actions";
+import {fetchProducts} from "../../store/product.actions";
+import {selectProductItems, selectProductLoading} from "../../../store/product.selectors";
 
 @Component({
   selector: 'app-product-list-page',
   templateUrl: './product-list-page.component.html',
   styleUrls: ['./product-list-page.component.scss']
 })
-export class ProductListPageComponent extends ProductComponent implements OnInit, OnDestroy {
-  products: ProductModel[] = [];
-
-  private subscription!: Subscription
+export class ProductListPageComponent extends ProductComponent implements OnInit {
+  products!: Observable<ProductModel[]>;
 
   constructor(
-    productRepository: ProductRepository,
-    cartService: CartService,
-    snackbarService: SnackbarService,
+    store: Store<AppState>,
   ) {
-    super(productRepository, cartService, snackbarService);
+    super(store);
   }
 
   ngOnInit(): void {
-    this.subscription = this.productRepository.getProducts()
-      .subscribe(
-        x => this.products = x
-      );
+    this.store.dispatch(fetchProducts());
+
+    this.products = this.store.select(selectProductItems);
+    this.showProgress = this.store.select(selectProductLoading);
   }
 
-  onBuy(item: ProductModel): void {
-    this.addProductToCart(item);
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  onBuy(product: ProductModel): void {
+    this.store.dispatch(addProduct({product}));
   }
 }

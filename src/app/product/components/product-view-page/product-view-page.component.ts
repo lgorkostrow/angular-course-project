@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductModel} from "../../models/product.model";
-import {ProductRepository} from "../../services/product.repository";
-import {ActivatedRoute, Data} from "@angular/router";
-import {CartService} from "../../../cart/services/cart.service";
 import {ProductComponent} from "../product/product.component";
-import {SnackbarService} from "../../../core/services/snackbar.service";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../../store/app.reducer";
+import {Observable} from "rxjs";
+import {addProduct} from "../../../cart/store/cart.actions";
+import {
+  selectProductLoading,
+  selectSelectedProductByUrl
+} from "../../../store/product.selectors";
 
 @Component({
   selector: 'app-product-view-page',
@@ -12,24 +16,20 @@ import {SnackbarService} from "../../../core/services/snackbar.service";
   styleUrls: ['./product-view-page.component.scss']
 })
 export class ProductViewPageComponent extends ProductComponent implements OnInit {
-  product!: ProductModel;
+  product!: Observable<ProductModel | null>;
 
   constructor(
-    productRepository: ProductRepository,
-    cartService: CartService,
-    snackbarService: SnackbarService,
-    private route: ActivatedRoute,
+    store: Store<AppState>,
   ) {
-    super(productRepository, cartService, snackbarService);
+    super(store);
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: Data) => {
-      this.product = data['product'];
-    });
+    this.product = this.store.select(selectSelectedProductByUrl);
+    this.showProgress = this.store.select(selectProductLoading);
   }
 
   onBuy(product: ProductModel) {
-    this.addProductToCart(product);
+    this.store.dispatch(addProduct({product}));
   }
 }

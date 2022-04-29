@@ -12,6 +12,7 @@ import {ProductItemComponent} from "./components/product-list-page/product-item/
 import {ProductViewPageComponent} from "./components/product-view-page/product-view-page.component";
 import { ProductCardComponent } from './components/product-view-page/product-card/product-card.component';
 import {SharedModule} from "../shared/shared.module";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {SharedModule} from "../shared/shared.module";
     FlexModule,
     MatSnackBarModule,
     ProductRoutingModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class ProductModule { }

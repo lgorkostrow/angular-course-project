@@ -9,7 +9,7 @@
       (deleteCartItem)="onDeleteCartItem($event)">
     </app-cart-list>
   </mat-card-content>
-  <mat-card-actions align="end" *ngIf="!isEmptyCart">
-    <button mat-raised-button color="primary" [routerLink]="['/process-order']">Order</button>
+  <mat-card-actions align="end" *ngIf="!(isEmptyCart | async)">
+    <button mat-raised-button color="primary" (click)="onOrder()">Order</button>
   </mat-card-actions>
 </mat-card>

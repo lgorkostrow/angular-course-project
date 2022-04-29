@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {CartItemModel} from "../../models/cart-item.model";
-import {CartService} from "../../services/cart.service";
+import {Component, OnInit} from '@angular/core';
+import {CartFacade} from "../../services/cart.facade";
+import {OrderFacade} from "../../../order/services/order.facade";
 
 @Component({
   selector: 'app-cart',
@@ -8,39 +8,33 @@ import {CartService} from "../../services/cart.service";
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-
-  get cartItems(): CartItemModel[] {
-    return this.cartService.items;
-  }
-
-  get cartTotalSum(): number {
-    return this.cartService.totalSum;
-  }
-
-  get cartTotalQuantity(): number {
-    return this.cartService.totalQuantity;
-  }
-
-  get isEmptyCart(): boolean {
-    return this.cartService.isEmptyCart();
-  }
+  cartItems = this.cartFacade.cartItems;
+  cartTotalSum = this.cartFacade.cartTotalSum;
+  cartTotalQuantity = this.cartFacade.cartTotalQuantity;
+  isEmptyCart = this.cartFacade.isEmptyCart;
 
   constructor(
-    private cartService: CartService,
+    private cartFacade: CartFacade,
+    private orderFacade: OrderFacade,
   ) { }
 
   ngOnInit(): void {
+    this.cartFacade.loadCart();
   }
 
   onIncreaseCartItem(productId: number): void {
-    this.cartService.increaseQuantity(productId);
+    this.cartFacade.increaseQuantity(productId);
   }
 
   onDecreaseCartItem(productId: number): void {
-    this.cartService.decreaseQuantity(productId);
+    this.cartFacade.decreaseQuantity(productId);
   }
 
   onDeleteCartItem(productId: number): void {
-    this.cartService.deleteItem(productId);
+    this.cartFacade.deleteCartItem(productId);
+  }
+
+  onOrder(): void {
+    this.orderFacade.createOrder();
   }
 }

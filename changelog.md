@@ -1,5 +1,15 @@
 # Changelog
 
+## Task 7. NgRx
+### Added
+* Added NgRx for Product and Cart module
+* Added feature and state selectors for product and cart states
+* Added Router/Store
+* Added product caching with the store
+* Added router store
+* Added navigation to the order page via router action
+* Added cart and order facade
+
 ## Task 6. HttpClient
 ### Added 
 * Added json server 

@@ -1,17 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CartItemModel} from "../../models/cart-item.model";
-import {Store} from "@ngrx/store";
-import {AppState} from "../../../store/app.reducer";
-import {Observable, of} from "rxjs";
-import {decreaseQuantity, deleteItem, fetchCart, increaseQuantity} from "../../store/cart.actions";
-import {
-  selectCartIsEmpty,
-  selectCartItems,
-  selectCartTotalQuantity,
-  selectCartTotalSum
-} from "../../../store/cart.selectors";
-import {createOrder} from "../../../order/store/order.actions";
-import {take} from "rxjs/operators";
+import {Component, OnInit} from '@angular/core';
+import {CartFacade} from "../../services/cart.facade";
+import {OrderFacade} from "../../../order/services/order.facade";
 
 @Component({
   selector: 'app-cart',
@@ -19,40 +8,33 @@ import {take} from "rxjs/operators";
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-  cartItems: Observable<CartItemModel[]> = of([]);
-  cartTotalSum: Observable<number> = of(0);
-  cartTotalQuantity: Observable<number> = of(0);
-  isEmptyCart: Observable<boolean> = of(true);
+  cartItems = this.cartFacade.cartItems;
+  cartTotalSum = this.cartFacade.cartTotalSum;
+  cartTotalQuantity = this.cartFacade.cartTotalQuantity;
+  isEmptyCart = this.cartFacade.isEmptyCart;
 
   constructor(
-    private store: Store<AppState>,
+    private cartFacade: CartFacade,
+    private orderFacade: OrderFacade,
   ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(fetchCart());
-
-    this.cartItems = this.store.select(selectCartItems);
-    this.cartTotalSum = this.store.select(selectCartTotalSum);
-    this.cartTotalQuantity = this.store.select(selectCartTotalQuantity);
-    this.isEmptyCart = this.store.select(selectCartIsEmpty);
+    this.cartFacade.loadCart();
   }
 
   onIncreaseCartItem(productId: number): void {
-    this.store.dispatch(increaseQuantity({productId}));
+    this.cartFacade.increaseQuantity(productId);
   }
 
   onDecreaseCartItem(productId: number): void {
-    this.store.dispatch(decreaseQuantity({productId}));
+    this.cartFacade.decreaseQuantity(productId);
   }
 
   onDeleteCartItem(productId: number): void {
-    this.store.dispatch(deleteItem({productId}));
+    this.cartFacade.deleteCartItem(productId);
   }
 
   onOrder(): void {
-    this.store.select(selectCartItems).pipe(
-      take(1),
-    )
-      .subscribe(cartItems => this.store.dispatch(createOrder({products: cartItems})));
+    this.orderFacade.createOrder();
   }
 }

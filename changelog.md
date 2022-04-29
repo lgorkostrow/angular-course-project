@@ -8,6 +8,7 @@
 * Added product caching with the store
 * Added router store
 * Added navigation to the order page via router action
+* Added cart and order facade
 
 ## Task 6. HttpClient
 ### Added 

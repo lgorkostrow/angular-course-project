@@ -48,6 +48,7 @@ const reducer = createReducer(
   }),
 );
 
+// Уже не обязательно делать тукую обертку, раньше надо было.
 export function productReducer(state: ProductState | undefined, action: Action) {
   return reducer(state, action);
 }

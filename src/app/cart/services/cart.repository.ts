@@ -23,4 +23,8 @@ export class CartRepository {
   save(items: CartItemModel[]): void {
     this.storage.set(this.appConstants.CartStorageKey, items);
   }
+
+  clear(): void {
+    this.storage.set(this.appConstants.CartStorageKey, []);
+  }
 }

@@ -12,8 +12,10 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import {IsEmptyCartGuard} from "./guards/is-empty-cart.guard";
+import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
+import {
+  ValidationErrorMessageComponent
+} from './components/validation-error-message/validation-error-message.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import {IsEmptyCartGuard} from "./guards/is-empty-cart.guard";
     DropdownSelectComponent,
     ToolbarComponent,
     PageNotFoundComponent,
+    ValidationErrorMessageComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import {IsEmptyCartGuard} from "./guards/is-empty-cart.guard";
     ToolbarComponent,
     CommonModule,
     FormsModule,
+    ValidationErrorMessageComponent,
   ],
   providers: [
     OrderByPipe,

@@ -1,5 +1,5 @@
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {map, switchMap} from "rxjs/operators";
+import {map, switchMap, take} from "rxjs/operators";
 import {CartRepository} from "../services/cart.repository";
 import {CartItemModel} from "../models/cart-item.model";
 import {Injectable} from "@angular/core";
@@ -7,7 +7,15 @@ import {Store} from "@ngrx/store";
 import {AppState} from "../../store/app.reducer";
 import {CartState} from "./cart.reducer";
 import {SnackbarService} from "../../core/services/snackbar.service";
-import {addProduct, decreaseQuantity, deleteItem, fetchCart, increaseQuantity, setCart} from "./cart.actions";
+import {
+  addProduct,
+  clearCart,
+  decreaseQuantity,
+  deleteItem,
+  fetchCart,
+  increaseQuantity,
+  setCart
+} from "./cart.actions";
 import {selectCartState} from "../../store/cart.selectors";
 
 @Injectable()
@@ -23,10 +31,17 @@ export class CartEffects {
   saveInStorage = createEffect(() => {
     return this.actions$.pipe(
       ofType(addProduct, increaseQuantity, decreaseQuantity, deleteItem),
-      switchMap(() => this.store.select(selectCartState)),
+      switchMap(() => this.store.select(selectCartState).pipe(take(1))),
       map((state: CartState) => {
         this.cartRepository.save(state.items);
       })
+    );
+  }, { dispatch: false });
+
+  clearStorageCart = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(clearCart),
+      map(() => this.cartRepository.clear()),
     );
   }, { dispatch: false });
 

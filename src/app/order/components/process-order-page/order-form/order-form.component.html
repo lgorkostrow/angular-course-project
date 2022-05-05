@@ -1,0 +1,63 @@
+<div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form)" class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="John" [formControl]="firstNameControl">
+      <mat-error>
+        <app-validation-error-message [formControlItem]="firstNameControl" [validationErrorMessages]="validationErrorMessages"></app-validation-error-message>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput placeholder="Doe" [formControl]="lastNameControl">
+      <mat-error>
+        <app-validation-error-message [formControlItem]="lastNameControl" [validationErrorMessages]="validationErrorMessages"></app-validation-error-message>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="johndoe@gmail.com" [formControl]="emailControl">
+      <mat-error>
+        <app-validation-error-message [formControlItem]="emailControl" [validationErrorMessages]="validationErrorMessages"></app-validation-error-message>
+      </mat-error>
+    </mat-form-field>
+
+    <ng-container formArrayName="phones">
+      <ng-container *ngFor="let phoneControl of phonesControl.controls; index as i">
+        <mat-form-field appearance="outline">
+          <mat-label>Phone</mat-label>
+          <input matInput type="number" placeholder="0681234365" [formControl]="convertToFormControl(phoneControl)">
+          <mat-error>
+            <app-validation-error-message [formControlItem]="phoneControl" [validationErrorMessages]="validationErrorMessages"></app-validation-error-message>
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+
+      <button mat-icon-button color="primary" (click)="addPhone()" type="button">
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <button mat-icon-button color="primary"
+              type="button"
+              *ngIf="phonesControl.controls.length > 1"
+              (click)="removePhone()">
+        <mat-icon>remove</mat-icon>
+      </button>
+    </ng-container>
+
+    <mat-checkbox [formControl]="shippingControl">Shipping</mat-checkbox>
+    <mat-form-field appearance="outline" *ngIf="shippingControl.value">
+      <mat-label>Address</mat-label>
+      <textarea matInput formControlName="address"></textarea>
+      <mat-error>
+        <app-validation-error-message [formControlItem]="form.get('address')!" [validationErrorMessages]="validationErrorMessages"></app-validation-error-message>
+      </mat-error>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+    </div>
+  </form>
+</div>

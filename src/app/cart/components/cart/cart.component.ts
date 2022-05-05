@@ -35,6 +35,6 @@ export class CartComponent implements OnInit {
   }
 
   onOrder(): void {
-    this.orderFacade.createOrder();
+    this.orderFacade.initializeOrder();
   }
 }

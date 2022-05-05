@@ -1,5 +1,10 @@
 # Changelog
 
+## Task 8. Forms
+### Added  
+* Added order form
+* Added order form handling
+
 ## Task 7. NgRx
 ### Added
 * Added NgRx for Product and Cart module

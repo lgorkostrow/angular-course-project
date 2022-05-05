@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcessOrderComponent } from './process-order.component';
+import { ProcessOrderPageComponent } from './process-order-page.component';
 
-describe('ProcessOrderComponent', () => {
-  let component: ProcessOrderComponent;
-  let fixture: ComponentFixture<ProcessOrderComponent>;
+describe('ProcessOrderPageComponent', () => {
+  let component: ProcessOrderPageComponent;
+  let fixture: ComponentFixture<ProcessOrderPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProcessOrderComponent ]
+      declarations: [ ProcessOrderPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProcessOrderComponent);
+    fixture = TestBed.createComponent(ProcessOrderPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

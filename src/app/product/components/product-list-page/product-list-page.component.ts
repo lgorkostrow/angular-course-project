@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductModel} from "../../models/product.model";
-import {ProductComponent} from "../product/product.component";
-import {Observable, Subscription} from "rxjs";
+import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app.reducer";
 import {addProduct} from "../../../cart/store/cart.actions";
@@ -13,14 +12,13 @@ import {selectProductItems, selectProductLoading} from "../../../store/product.s
   templateUrl: './product-list-page.component.html',
   styleUrls: ['./product-list-page.component.scss']
 })
-export class ProductListPageComponent extends ProductComponent implements OnInit {
+export class ProductListPageComponent implements OnInit {
+  showProgress!: Observable<boolean>;
   products!: Observable<ProductModel[]>;
 
   constructor(
-    store: Store<AppState>,
-  ) {
-    super(store);
-  }
+    private store: Store<AppState>,
+  ) {}
 
   ngOnInit(): void {
     this.store.dispatch(fetchProducts());

@@ -7,6 +7,10 @@ export class OrderByPipe implements PipeTransform {
       return arr;
     }
 
+    if (!(field in arr[0])) {
+      throw Error('Undefined field');
+    }
+
     return arr.sort((a, b) => {
       const field1 = (a as any)[field];
       const field2 = (b as any)[field];

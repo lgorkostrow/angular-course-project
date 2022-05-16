@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ProductCardComponent } from './product-card.component';
+import {ProductCardComponent} from './product-card.component';
+import {CategoryEnum, ProductModel} from "../../../models/product.model";
 
 describe('ProductCardComponent', () => {
   let component: ProductCardComponent;
@@ -21,5 +22,24 @@ describe('ProductCardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit event on product buying', () => {
+    // Arrange
+    component.addItemToCart = jasmine.createSpyObj(['emit']);
+    const productModel: ProductModel = {
+      id: 1,
+      isAvailable: true,
+      name: 'Test',
+      description: 'Test',
+      category: CategoryEnum.Laptops,
+      price: 10.99,
+    };
+
+    // Act
+    component.onBuy(productModel);
+
+    // Assert
+    expect(component.addItemToCart.emit).toHaveBeenCalledWith(productModel);
   });
 });

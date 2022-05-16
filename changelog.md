@@ -1,5 +1,12 @@
 # Changelog
 
+## Task 9. Unit Tests
+### Added
+* Unit tests for AppComponent, Product components, OrderByPipe
+
+### Removed
+* Removed default unit tests files for several components
+
 ## Task 8. Forms
 ### Added  
 * Added order form

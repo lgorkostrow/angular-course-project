@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ProductComponent } from './components/product/product.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatGridListModule} from "@angular/material/grid-list";
@@ -18,13 +17,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
   declarations: [
     ProductListComponent,
     ProductItemComponent,
-    ProductComponent,
     ProductViewPageComponent,
     ProductListPageComponent,
     ProductCardComponent,
-  ],
-  exports: [
-    ProductComponent,
   ],
   imports: [
     SharedModule,

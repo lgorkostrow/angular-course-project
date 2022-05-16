@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductModel} from "../../models/product.model";
-import {ProductComponent} from "../product/product.component";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/app.reducer";
 import {Observable} from "rxjs";
@@ -15,14 +14,13 @@ import {
   templateUrl: './product-view-page.component.html',
   styleUrls: ['./product-view-page.component.scss']
 })
-export class ProductViewPageComponent extends ProductComponent implements OnInit {
+export class ProductViewPageComponent implements OnInit {
+  showProgress!: Observable<boolean>;
   product!: Observable<ProductModel | null>;
 
   constructor(
-    store: Store<AppState>,
-  ) {
-    super(store);
-  }
+    private store: Store<AppState>,
+  ) {}
 
   ngOnInit(): void {
     this.product = this.store.select(selectSelectedProductByUrl);

@@ -3,7 +3,6 @@ import {InjectionToken} from "@angular/core";
 export const LocalStorageService = new InjectionToken<StorageService>('LocalStorageService');
 export const SessionStorageService = new InjectionToken<StorageService>('SessionStorageService');
 
-
 export class StorageService {
   constructor(protected storage: Storage) {
   }

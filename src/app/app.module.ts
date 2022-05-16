@@ -19,7 +19,6 @@ import {OrderModule} from "./order/order.module";
 import {AdminModule} from "./admin/admin.module";
 import {HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
-import {Environment} from "./core/models/environment";
 import {StoreModule} from "@ngrx/store";
 import {appReducer} from "./store/app.reducer";
 import {EffectsModule} from "@ngrx/effects";
@@ -29,10 +28,7 @@ import {RouterState, StoreRouterConnectingModule} from "@ngrx/router-store";
 import {CustomSerializer} from "./store/router.custom-serializer";
 import {OrderEffects} from "./order/store/order.effects";
 import {RouterEffects} from "./store/router.effects";
-
-export const ENV_TOKEN = new InjectionToken<Environment>(
-  'app.environment.token'
-);
+import {ENV_TOKEN} from "./core/tokens";
 
 @NgModule({
   declarations: [

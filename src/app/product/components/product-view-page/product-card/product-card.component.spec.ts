@@ -43,3 +43,5 @@ describe('ProductCardComponent', () => {
     expect(component.addItemToCart.emit).toHaveBeenCalledWith(productModel);
   });
 });
+// Было бы хорошо увидеть еще хотя бы 1 тест интеграционный с шаблоном для проверки корректного отображения данных
+// Больше замечаний нет

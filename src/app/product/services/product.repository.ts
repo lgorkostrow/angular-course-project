@@ -4,8 +4,8 @@ import {Inject, Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Environment} from "../../core/models/environment";
-import {ENV_TOKEN} from "../../app.module";
 import {delay} from "rxjs/operators";
+import {ENV_TOKEN} from "../../core/tokens";
 
 @Injectable({providedIn: 'root'})
 export class ProductRepository extends BaseRepository {

@@ -46,9 +46,8 @@ export class CartListComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
-
 
   ngDoCheck() {
     if (this.differs.find(this.items)) {

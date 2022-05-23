@@ -55,9 +55,11 @@ describe('CartListComponent', () => {
 
       // Assert
       const htmlElement: HTMLElement = fixture.nativeElement;
-      const th = htmlElement.querySelector('#total-quantity');
-      const b = th!.getElementsByTagName('b')[0];
 
+      const th = htmlElement.querySelector('#total-quantity');
+      expect(th!.getElementsByTagName('b').length).not.toEqual(0);
+
+      const b = th!.getElementsByTagName('b')[0];
       expect(b.textContent).toEqual(totalQuantity.toString());
     });
 
@@ -72,9 +74,11 @@ describe('CartListComponent', () => {
 
       // Assert
       const htmlElement: HTMLElement = fixture.nativeElement;
-      const th = htmlElement.querySelector('#total-sum');
-      const b = th!.getElementsByTagName('b')[0];
 
+      const th = htmlElement.querySelector('#total-sum');
+      expect(th!.getElementsByTagName('b').length).not.toEqual(0);
+
+      const b = th!.getElementsByTagName('b')[0];
       expect(b.textContent).toEqual('$' + totalSum);
     });
   });
